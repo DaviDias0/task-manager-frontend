@@ -1,11 +1,10 @@
+// src/services/api.ts
 import axios from 'axios';
+import type { TaskStatus } from '../types'; // Importa o TIPO
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://task-manager-api-h99p.onrender.com',
 });
-
-// ESTA É A LINHA QUE PRECISA SER EXPORTADA CORRETAMENTE
-export type TaskStatus = 'pending' | 'in-progress' | 'done';
 
 export const createTask = async (title: string, description: string) => {
   const response = await api.post('/tasks', { title, description });
