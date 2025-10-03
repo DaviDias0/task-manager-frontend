@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import api, { updateTaskStatus, deleteTask } from '../services/api';
+// A importação de 'api' não é mais necessária aqui, mas as outras funções sim
+import { getTasks, updateTaskStatus, deleteTask } from '../services/api';
 import type { Task, TaskStatus } from '../types';
 import TaskCard from '../components/TaskCard';
 import AddTaskForm from '../components/AddTaskForm';
@@ -14,19 +15,11 @@ export function TasksPage() {
 
   const fetchTasks = async () => {
     try {
-      const token = localStorage.getItem('authToken');
-      if (!token) {
-        auth?.logout();
-        return;
-      }
-      const config = {
-        headers: { 'Authorization': `Bearer ${token}` }
-      };
-      const response = await api.get('/tasks', config);
-      setTasks(response.data);
+      const data = await getTasks(); // Usa a função importada
+      setTasks(data);
     } catch (error) {
       console.error("Falha ao buscar tarefas:", error);
-      auth?.logout(); // Se der erro (ex: token expirado), desloga
+      auth?.logout();
     } finally {
       setLoading(false);
     }
@@ -39,7 +32,6 @@ export function TasksPage() {
   const handleTaskAdded = () => { fetchTasks(); };
 
   const handleUpdateTask = async (id: number, status: TaskStatus) => {
-    // Lógica completa aqui
     try {
       await updateTaskStatus(id, status);
       fetchTasks();
@@ -49,7 +41,6 @@ export function TasksPage() {
   };
 
   const handleDeleteTask = async (id: number) => {
-    // Lógica completa aqui
     if (window.confirm("Tem certeza que deseja deletar esta tarefa?")) {
       try {
         await deleteTask(id);
