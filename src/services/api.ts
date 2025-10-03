@@ -1,9 +1,12 @@
 import axios from 'axios';
-import type { TaskStatus, UpdateTaskData } from '../types'; // Importa tudo de 'types.ts'
+// A importação de TaskStatus foi removida desta linha
+import type { UpdateTaskData } from '../types';
 
 const api = axios.create({
   baseURL: 'https://task-manager-api-h99p.onrender.com',
 });
+
+// ... (o resto do arquivo continua exatamente igual) ...
 
 api.interceptors.request.use(
   (config) => {
