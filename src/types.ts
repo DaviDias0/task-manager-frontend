@@ -1,4 +1,3 @@
-// src/types.ts
 export type TaskStatus = 'pending' | 'in-progress' | 'done';
 
 export type Task = {
