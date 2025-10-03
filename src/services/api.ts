@@ -1,10 +1,19 @@
-// src/services/api.ts
 import axios from 'axios';
-import type { TaskStatus } from '../types'; // Importa o TIPO
+import type { TaskStatus } from '../types';
 
 const api = axios.create({
   baseURL: 'https://task-manager-api-h99p.onrender.com',
 });
+
+export const registerUser = async (name: string, email: string, password: string) => {
+  const response = await api.post('/auth/register', { name, email, password });
+  return response.data;
+};
+
+export const loginUser = async (email: string, password: string) => {
+  const response = await api.post('/auth/login', { email, password });
+  return response.data;
+};
 
 export const createTask = async (title: string, description: string) => {
   const response = await api.post('/tasks', { title, description });
