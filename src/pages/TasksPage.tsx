@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-// A importação de 'api' não é mais necessária aqui, mas as outras funções sim
-import { getTasks, updateTaskStatus, deleteTask } from '../services/api';
-import type { Task, TaskStatus } from '../types';
+import { getTasks, updateTask, deleteTask } from '../services/api';
+import type { Task, UpdateTaskData } from '../types';
 import TaskCard from '../components/TaskCard';
 import AddTaskForm from '../components/AddTaskForm';
+import { EditTaskModal } from '../components/EditTaskModal';
 import '../components/TaskCard.css';
 import '../components/AddTaskForm.css';
 
@@ -12,10 +12,12 @@ export function TasksPage() {
   const auth = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchTasks = async () => {
     try {
-      const data = await getTasks(); // Usa a função importada
+      const data = await getTasks();
       setTasks(data);
     } catch (error) {
       console.error("Falha ao buscar tarefas:", error);
@@ -25,15 +27,13 @@ export function TasksPage() {
     }
   };
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
+  useEffect(() => { fetchTasks(); }, []);
 
   const handleTaskAdded = () => { fetchTasks(); };
 
-  const handleUpdateTask = async (id: number, status: TaskStatus) => {
+  const handleUpdateTask = async (id: number, data: UpdateTaskData) => {
     try {
-      await updateTaskStatus(id, status);
+      await updateTask(id, data);
       fetchTasks();
     } catch (error) {
       alert("Falha ao atualizar a tarefa.");
@@ -51,6 +51,25 @@ export function TasksPage() {
     }
   };
 
+  const handleOpenEditModal = (task: Task) => {
+    setEditingTask(task);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingTask(null);
+  };
+
+  const handleSaveChanges = async (id: number, data: UpdateTaskData) => {
+    try {
+      await handleUpdateTask(id, data);
+      handleCloseModal();
+    } catch (error) {
+      alert('Falha ao salvar as alterações.');
+    }
+  };
+
   return (
     <div className="app-container">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -59,25 +78,25 @@ export function TasksPage() {
       </div>
       <AddTaskForm onTaskAdded={handleTaskAdded} />
       <div className="task-list">
-        {loading ? (
-          <p>Carregando tarefas...</p>
-        ) : (
+        {loading ? ( <p>Carregando tarefas...</p> ) : (
           tasks.map(task => (
             <TaskCard
               key={task.id}
-              id={task.id}
-              title={task.title}
-              description={task.description ?? ''}
-              status={task.status}
+              task={task}
               onUpdate={handleUpdateTask}
               onDelete={handleDeleteTask}
+              onEdit={handleOpenEditModal}
             />
           ))
         )}
-        {!loading && tasks.length === 0 && (
-          <p>Nenhuma tarefa encontrada. Que tal adicionar uma?</p>
-        )}
+        {!loading && tasks.length === 0 && ( <p>Nenhuma tarefa encontrada. Que tal adicionar uma?</p> )}
       </div>
+      <EditTaskModal
+        isOpen={isModalOpen}
+        onRequestClose={handleCloseModal}
+        task={editingTask}
+        onSave={handleSaveChanges}
+      />
     </div>
   );
 }

@@ -1,11 +1,10 @@
 import axios from 'axios';
-import type { TaskStatus } from '../types';
+import type { TaskStatus, UpdateTaskData } from '../types'; // Importa tudo de 'types.ts'
 
 const api = axios.create({
   baseURL: 'https://task-manager-api-h99p.onrender.com',
 });
 
-// --- INTERCEPTADOR DE REQUISIÇÃO ---
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('authToken');
@@ -19,7 +18,6 @@ api.interceptors.request.use(
   }
 );
 
-// --- FUNÇÕES DE AUTENTICAÇÃO ---
 export const registerUser = async (name: string, email: string, password: string) => {
   const response = await api.post('/auth/register', { name, email, password });
   return response.data;
@@ -30,7 +28,6 @@ export const loginUser = async (email: string, password: string) => {
   return response.data;
 };
 
-// --- FUNÇÕES DE TAREFAS ---
 export const getTasks = async () => {
   const response = await api.get('/tasks');
   return response.data;
@@ -41,8 +38,8 @@ export const createTask = async (title: string, description: string) => {
   return response.data;
 };
 
-export const updateTaskStatus = async (id: number, status: TaskStatus) => {
-  const response = await api.patch(`/tasks/${id}`, { status });
+export const updateTask = async (id: number, data: UpdateTaskData) => {
+  const response = await api.patch(`/tasks/${id}`, data);
   return response.data;
 };
 
