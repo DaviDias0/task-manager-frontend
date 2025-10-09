@@ -1,0 +1,67 @@
+.add-task-form {
+  padding: 1.5rem;
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.add-task-form summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  list-style: none; /* Remove a seta padrão */
+}
+
+.add-task-form summary::-webkit-details-marker {
+  display: none; /* Remove a seta padrão no Chrome */
+}
+
+.add-task-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.add-task-form input,
+.add-task-form textarea {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--surface-2);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.add-task-form input::placeholder,
+.add-task-form textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.add-task-form input:focus,
+.add-task-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.add-task-form button {
+  align-self: flex-start;
+  background-color: var(--accent-blue);
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-task-form button:hover {
+  background-color: var(--accent-blue-hover);
+}

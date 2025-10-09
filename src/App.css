@@ -1,0 +1,50 @@
+.app-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.875rem; /* 30px */
+  color: var(--text-primary);
+}
+
+.logout-button {
+  background-color: var(--surface-2);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem; /* 8px */
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: var(--border-color);
+}
+
+.loading-message, .empty-state {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 3rem 1rem;
+  margin-top: 2rem;
+  background-color: var(--surface-1);
+  border-radius: 0.75rem; /* 12px */
+  border: 1px dashed var(--border-color);
+}
+
+.empty-state h2 {
+  margin-top: 0;
+  color: var(--text-primary);
+}

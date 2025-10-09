@@ -1,0 +1,105 @@
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.task-card {
+  background: var(--surface-1);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.task-card:hover {
+  background-color: var(--surface-2);
+}
+
+.task-content h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-primary);
+  font-size: 1.125rem;
+}
+
+.task-content p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.status {
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Cores do Status: Amarelo e Verde */
+.status-pending {
+  background-color: rgba(245, 158, 11, 0.1); /* Amarelo (Warning) */
+  color: var(--warning);
+}
+
+.status-done {
+  background-color: rgba(16, 185, 129, 0.1); /* Verde (Success) */
+  color: var(--success);
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-button {
+  background-color: var(--surface-2);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+/* Cores dos Botões: Amarelo, Verde e Vermelho */
+.action-button.edit {
+  color: var(--warning);
+  border-color: var(--warning);
+}
+.action-button.edit:hover {
+  background-color: var(--warning);
+  color: white;
+}
+
+.action-button.complete {
+  color: var(--success);
+  border-color: var(--success);
+}
+.action-button.complete:hover {
+  background-color: var(--success);
+  color: white;
+}
+
+.action-button.delete {
+  color: var(--error);
+  border-color: var(--error);
+}
+.action-button.delete:hover {
+  background-color: var(--error);
+  color: white;
+}
