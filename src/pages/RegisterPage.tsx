@@ -8,16 +8,20 @@ export function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await registerUser(name, email, password);
       toast.success('Usuário registrado com sucesso!');
       navigate('/login');
     } catch (error: any) {
       toast.error(error.response?.data?.errors[0]?.msg || error.response?.data?.message || 'Falha no registro.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -29,7 +33,9 @@ export function RegisterPage() {
           <input type="text" placeholder="Seu nome" value={name} onChange={(e) => setName(e.target.value)} required />
           <input type="email" placeholder="Seu e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
           <input type="password" placeholder="Crie uma senha (mín. 6 caracteres)" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          <button type="submit">Registrar</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Registrando...' : 'Registrar'}
+          </button>
         </form>
         <p>Já tem uma conta? <Link to="/login">Faça o login</Link></p>
       </div>

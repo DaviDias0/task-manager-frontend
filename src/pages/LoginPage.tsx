@@ -8,17 +8,21 @@ import './Auth.css';
 export function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const auth = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await loginUser(email, password);
       if (response.token && auth) {
         auth.login(response.token);
       }
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Falha no login.');
+      toast.error(error.response?.data?.message || 'E-mail ou senha inválidos.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -29,7 +33,9 @@ export function LoginPage() {
         <form onSubmit={handleSubmit}>
           <input type="email" placeholder="Seu e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
           <input type="password" placeholder="Sua senha" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          <button type="submit">Entrar</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Entrando...' : 'Entrar'}
+          </button>
         </form>
         <p>Não tem uma conta? <Link to="/register">Registre-se</Link></p>
       </div>
