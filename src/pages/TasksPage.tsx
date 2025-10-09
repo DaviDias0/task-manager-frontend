@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css'; // Lembre-se que o ideal é importar no main.tsx
+import 'react-loading-skeleton/dist/skeleton.css';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { useAuth } from '../contexts/AuthContext';
 import { getTasks, updateTask, deleteTask, createTask } from '../services/api';
@@ -43,7 +44,7 @@ export function TasksPage() {
     try {
       await createTask(title, description);
       toast.success('Tarefa adicionada!');
-      fetchTasks();
+      fetchTasks(); // Refetch tasks to get the new list
     } catch (error) {
       toast.error('Não foi possível adicionar a tarefa.');
     }
@@ -107,27 +108,42 @@ export function TasksPage() {
       </div>
 
       <div className="task-list">
+        {/* LÓGICA CORRIGIDA: Mantém o Skeleton fora das animações */}
         {loading ? (
           <>
             <Skeleton height={120} style={{ marginBottom: '1rem', borderRadius: '8px' }} />
             <Skeleton height={120} style={{ marginBottom: '1rem', borderRadius: '8px' }} />
             <Skeleton height={120} style={{ marginBottom: '1rem', borderRadius: '8px' }} />
           </>
-        ) : filteredTasks.length === 0 ? ( // Checa a lista FILTRADA
-          <div className="empty-state">
-            <h2>Nenhuma tarefa encontrada.</h2>
-            <p>{searchTerm ? "Tente uma busca diferente." : "Seja o primeiro a adicionar uma nova tarefa acima!"}</p>
-          </div>
         ) : (
-          filteredTasks.map(task => ( // Usa a lista FILTRADA
-            <TaskCard
-              key={task.id}
-              task={task}
-              onUpdate={handleUpdateTask}
-              onDelete={handleDeleteTask}
-              onEdit={handleOpenEditModal}
-            />
-          ))
+          <AnimatePresence>
+            {/* Se não estiver carregando, verificamos se a lista está vazia ou tem itens */}
+            {filteredTasks.length === 0 ? (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="empty-state">
+                  <h2>Nenhuma tarefa encontrada.</h2>
+                  <p>{searchTerm ? "Tente uma busca diferente." : "Seja o primeiro a adicionar uma nova tarefa acima!"}</p>
+                </div>
+              </motion.div>
+            ) : (
+              filteredTasks.map(task => (
+                <motion.div
+                  key={task.id}
+                  layout
+                  initial={{ opacity: 0, y: 50, scale: 0.3 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+                >
+                  <TaskCard
+                    task={task}
+                    onUpdate={handleUpdateTask}
+                    onDelete={handleDeleteTask}
+                    onEdit={handleOpenEditModal}
+                  />
+                </motion.div>
+              ))
+            )}
+          </AnimatePresence>
         )}
       </div>
 
