@@ -6,7 +6,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import 'react-loading-skeleton/dist/skeleton.css';
 // Não precisamos mais importar App.css ou Auth.css aqui, pois tudo está em index.css
 
 function App() {

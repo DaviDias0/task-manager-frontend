@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+// NOVO: Importar o Skeleton e o CSS dele (lembre-se de adicionar o CSS no seu main.tsx ou App.tsx)
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
 import { useAuth } from '../contexts/AuthContext';
 import { getTasks, updateTask, deleteTask, createTask } from '../services/api';
 import type { Task, UpdateTaskData } from '../types/types';
@@ -10,12 +14,14 @@ import { toast } from 'react-toastify';
 export function TasksPage() {
   const auth = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
+  // O nome do estado foi mantido como 'loading' para aproveitar sua lógica existente
   const [loading, setLoading] = useState(true);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   const fetchTasks = async () => {
     try {
-      setLoading(true);
+      // Não é mais necessário setar o loading aqui, pois o estado inicial já é 'true'
+      // setLoading(true); 
       const data = await getTasks();
       setTasks(data);
     } catch (error) {
@@ -33,6 +39,7 @@ export function TasksPage() {
     }
   }, [auth?.isAuthenticated]);
 
+  // ... (o restante das suas funções handleTaskAdded, handleUpdateTask, etc. continua igual)
   const handleTaskAdded = async (title: string, description: string) => {
     try {
       await createTask(title, description);
@@ -73,6 +80,7 @@ export function TasksPage() {
     handleCloseModal();
   };
 
+
   return (
     <main className="app-container">
       <header className="header">
@@ -86,22 +94,32 @@ export function TasksPage() {
       </details>
 
       <div className="task-list">
-        {loading && <p className="loading-message">Carregando tarefas...</p>}
-        {!loading && tasks.length === 0 && (
+        {/* NOVO: Lógica do Skeleton Screen */}
+        {loading ? (
+          // Enquanto 'loading' for true, exibe 3 "esqueletos" de tarefas
+          <>
+            <Skeleton height={120} style={{ marginBottom: '1rem', borderRadius: '8px' }} />
+            <Skeleton height={120} style={{ marginBottom: '1rem', borderRadius: '8px' }} />
+            <Skeleton height={120} style={{ marginBottom: '1rem', borderRadius: '8px' }} />
+          </>
+        ) : tasks.length === 0 ? (
+          // Se não estiver carregando e não houver tarefas, exibe o estado de vazio
           <div className="empty-state">
             <h2>Nenhuma tarefa encontrada.</h2>
             <p>Seja o primeiro a adicionar uma nova tarefa acima!</p>
           </div>
+        ) : (
+          // Se não estiver carregando e houver tarefas, exibe a lista
+          tasks.map(task => (
+            <TaskCard
+              key={task.id}
+              task={task}
+              onUpdate={handleUpdateTask}
+              onDelete={handleDeleteTask}
+              onEdit={handleOpenEditModal}
+            />
+          ))
         )}
-        {!loading && tasks.map(task => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            onUpdate={handleUpdateTask}
-            onDelete={handleDeleteTask}
-            onEdit={handleOpenEditModal}
-          />
-        ))}
       </div>
 
       {editingTask && (
