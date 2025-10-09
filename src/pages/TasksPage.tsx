@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-// NOVO: Importar o Skeleton e o CSS dele (lembre-se de adicionar o CSS no seu main.tsx ou App.tsx)
 import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import 'react-loading-skeleton/dist/skeleton.css'; // Lembre-se que o ideal é importar no main.tsx
 
 import { useAuth } from '../contexts/AuthContext';
 import { getTasks, updateTask, deleteTask, createTask } from '../services/api';
@@ -12,16 +11,16 @@ import { EditTaskModal } from '../components/EditTaskModal';
 import { toast } from 'react-toastify';
 
 export function TasksPage() {
+  // --- ESTADOS DO COMPONENTE ---
   const auth = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
-  // O nome do estado foi mantido como 'loading' para aproveitar sua lógica existente
   const [loading, setLoading] = useState(true);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
+  // --- LÓGICA DE DADOS ---
   const fetchTasks = async () => {
     try {
-      // Não é mais necessário setar o loading aqui, pois o estado inicial já é 'true'
-      // setLoading(true); 
       const data = await getTasks();
       setTasks(data);
     } catch (error) {
@@ -39,7 +38,7 @@ export function TasksPage() {
     }
   }, [auth?.isAuthenticated]);
 
-  // ... (o restante das suas funções handleTaskAdded, handleUpdateTask, etc. continua igual)
+  // --- MANIPULADORES DE EVENTOS (HANDLERS) ---
   const handleTaskAdded = async (title: string, description: string) => {
     try {
       await createTask(title, description);
@@ -80,6 +79,10 @@ export function TasksPage() {
     handleCloseModal();
   };
 
+  // --- LÓGICA DE RENDERIZAÇÃO ---
+  const filteredTasks = tasks.filter(task =>
+    task.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <main className="app-container">
@@ -93,24 +96,30 @@ export function TasksPage() {
         <AddTaskForm onTaskAdded={handleTaskAdded} />
       </details>
 
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Buscar tarefa por título..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
       <div className="task-list">
-        {/* NOVO: Lógica do Skeleton Screen */}
         {loading ? (
-          // Enquanto 'loading' for true, exibe 3 "esqueletos" de tarefas
           <>
             <Skeleton height={120} style={{ marginBottom: '1rem', borderRadius: '8px' }} />
             <Skeleton height={120} style={{ marginBottom: '1rem', borderRadius: '8px' }} />
             <Skeleton height={120} style={{ marginBottom: '1rem', borderRadius: '8px' }} />
           </>
-        ) : tasks.length === 0 ? (
-          // Se não estiver carregando e não houver tarefas, exibe o estado de vazio
+        ) : filteredTasks.length === 0 ? ( // Checa a lista FILTRADA
           <div className="empty-state">
             <h2>Nenhuma tarefa encontrada.</h2>
-            <p>Seja o primeiro a adicionar uma nova tarefa acima!</p>
+            <p>{searchTerm ? "Tente uma busca diferente." : "Seja o primeiro a adicionar uma nova tarefa acima!"}</p>
           </div>
         ) : (
-          // Se não estiver carregando e houver tarefas, exibe a lista
-          tasks.map(task => (
+          filteredTasks.map(task => ( // Usa a lista FILTRADA
             <TaskCard
               key={task.id}
               task={task}
