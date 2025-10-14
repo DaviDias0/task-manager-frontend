@@ -1,25 +1,24 @@
+// src/pages/TasksPage.tsx
+
 import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { motion, AnimatePresence } from 'framer-motion';
-
 import { useAuth } from '../contexts/AuthContext';
 import { getTasks, updateTask, deleteTask, createTask } from '../services/api';
-import type { Task, UpdateTaskData } from '../types/types';
+import type { Task } from '../types/types';
 import TaskCard from '../components/TaskCard';
 import AddTaskForm from '../components/AddTaskForm';
 import { EditTaskModal } from '../components/EditTaskModal';
 import { toast } from 'react-toastify';
 
 export function TasksPage() {
-  // --- ESTADOS DO COMPONENTE ---
   const auth = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // --- LÓGICA DE DADOS ---
   const fetchTasks = async () => {
     try {
       const data = await getTasks();
@@ -34,23 +33,22 @@ export function TasksPage() {
   };
 
   useEffect(() => {
-    if(auth?.isAuthenticated) {
+    if (auth?.isAuthenticated) {
       fetchTasks();
     }
   }, [auth?.isAuthenticated]);
 
-  // --- MANIPULADORES DE EVENTOS (HANDLERS) ---
-  const handleTaskAdded = async (title: string, description: string) => {
+  const handleTaskAdded = async (title: string, description: string, priority: string, dueDate: string) => {
     try {
-      await createTask(title, description);
+      await createTask(title, description, priority, dueDate);
       toast.success('Tarefa adicionada!');
-      fetchTasks(); // Refetch tasks to get the new list
+      fetchTasks();
     } catch (error) {
       toast.error('Não foi possível adicionar a tarefa.');
     }
   };
 
-  const handleUpdateTask = async (id: number, data: UpdateTaskData) => {
+  const handleUpdateTask = async (id: number, data: Partial<Task>) => {
     try {
       await updateTask(id, data);
       toast.success('Tarefa atualizada!');
@@ -74,13 +72,12 @@ export function TasksPage() {
 
   const handleOpenEditModal = (task: Task) => setEditingTask(task);
   const handleCloseModal = () => setEditingTask(null);
-  
-  const handleSaveChanges = async (id: number, data: UpdateTaskData) => {
+
+  const handleSaveChanges = async (id: number, data: Partial<Task>) => {
     await handleUpdateTask(id, data);
     handleCloseModal();
   };
 
-  // --- LÓGICA DE RENDERIZAÇÃO ---
   const filteredTasks = tasks.filter(task =>
     task.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -91,12 +88,10 @@ export function TasksPage() {
         <h1>Minhas Tarefas</h1>
         <button onClick={auth?.logout} className="logout-button">Sair</button>
       </header>
-
       <details className="add-task-form" open>
         <summary>Adicionar Nova Tarefa</summary>
         <AddTaskForm onTaskAdded={handleTaskAdded} />
       </details>
-
       <div className="search-container">
         <input
           type="text"
@@ -106,9 +101,7 @@ export function TasksPage() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-
       <div className="task-list">
-        {/* LÓGICA CORRIGIDA: Mantém o Skeleton fora das animações */}
         {loading ? (
           <>
             <Skeleton height={120} style={{ marginBottom: '1rem', borderRadius: '8px' }} />
@@ -117,7 +110,6 @@ export function TasksPage() {
           </>
         ) : (
           <AnimatePresence>
-            {/* Se não estiver carregando, verificamos se a lista está vazia ou tem itens */}
             {filteredTasks.length === 0 ? (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 <div className="empty-state">
@@ -136,7 +128,6 @@ export function TasksPage() {
                 >
                   <TaskCard
                     task={task}
-                    onUpdate={handleUpdateTask}
                     onDelete={handleDeleteTask}
                     onEdit={handleOpenEditModal}
                   />
@@ -146,7 +137,6 @@ export function TasksPage() {
           </AnimatePresence>
         )}
       </div>
-
       {editingTask && (
         <EditTaskModal
           isOpen={!!editingTask}

@@ -81,7 +81,7 @@ body {
 }
 
 /* ==========================================================================
-   Formulário de Adicionar Tarefa
+   Formulário de Adicionar Tarefa (VERSÃO CORRIGIDA)
    ========================================================================== */
 
 .add-task-form {
@@ -97,22 +97,24 @@ body {
   font-weight: 600;
   font-size: 1.25rem;
   color: var(--text-primary);
-  list-style: none; /* Remove a seta padrão */
+  list-style: none;
 }
 
 .add-task-form summary::-webkit-details-marker {
-  display: none; /* Remove a seta padrão no Chrome */
+  display: none;
 }
 
-.add-task-form-fields {
+/* NOVO: Container flex para os campos */
+.add-task-content {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1rem; /* Espaçamento consistente entre todos os elementos */
   margin-top: 1.5rem;
 }
 
-.add-task-form input,
-.add-task-form textarea {
+.add-task-content input,
+.add-task-content textarea,
+.add-task-content select {
   width: 100%;
   padding: 12px;
   background-color: var(--surface-2);
@@ -121,24 +123,29 @@ body {
   border-radius: 8px;
   font-size: 1rem;
   box-sizing: border-box;
-  resize: vertical;
-  font-family: 'Inter', sans-serif; /* Garante que a fonte seja a mesma */
+  font-family: 'Inter', sans-serif;
 }
 
-.add-task-form input::placeholder,
-.add-task-form textarea::placeholder {
+.add-task-content textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.add-task-content input::placeholder,
+.add-task-content textarea::placeholder {
   color: var(--text-secondary);
 }
 
-.add-task-form input:focus,
-.add-task-form textarea:focus {
+.add-task-content input:focus,
+.add-task-content textarea:focus,
+.add-task-content select:focus {
   outline: none;
   border-color: var(--accent-blue);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
 
-.add-task-form button {
-  align-self: flex-start;
+.add-task-content button {
+  align-self: flex-start; /* Alinha o botão à esquerda */
   background-color: var(--accent-blue);
   color: white;
   font-weight: 600;
@@ -146,11 +153,31 @@ body {
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.add-task-form button:hover {
+.add-task-content button:hover {
   background-color: var(--accent-blue-hover);
+  transform: scale(1.03);
+}
+
+/* O CSS para .form-row e .form-group continua o mesmo, 
+   mas certifique-se de que ele está no seu arquivo */
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
 }
 
 /* ==========================================================================
@@ -306,4 +333,192 @@ body {
 .search-input:focus {
   border-color: #4299e1;
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.form-row {
+  display: flex; /* A mágica acontece aqui: alinha os itens lado a lado */
+  gap: 1rem; /* Cria um espaço de 16px entre os itens */
+  margin-top: 1rem; /* Espaço acima da linha */
+  margin-bottom: 1rem; /* Espaço abaixo da linha */
+}
+
+/* Estilos para cada grupo (label + input) dentro da linha */
+.form-group {
+  flex: 1; /* Faz cada grupo ocupar metade do espaço disponível */
+  display: flex;
+  flex-direction: column; /* Coloca a label em cima do input/select */
+}
+
+/* Estilo para as labels */
+.form-group label {
+  margin-bottom: 0.5rem; /* Espaço entre a label e o campo */
+  font-size: 0.875rem; /* Tamanho da fonte um pouco menor */
+  color: #a0aec0; /* Cor cinza claro */
+}
+
+/* Estilo para o campo de data e o seletor de prioridade */
+.form-group select,
+.form-group input[type="date"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #2d3748;
+  border: 1px solid #4a5568;
+  border-radius: 8px;
+  color: #e2e8f0;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-group select:focus,
+.form-group input[type="date"]:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+/* Adicione este CSS no final do seu index.css */
+
+/* Container para prioridade e data */
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Pílula de Prioridade */
+.priority-pill {
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Cores para cada prioridade */
+.priority-baixa { background-color: rgba(16, 185, 129, 0.1); color: var(--success); }
+.priority-media { background-color: rgba(59, 130, 246, 0.1); color: var(--accent-blue); }
+.priority-alta { background-color: rgba(245, 158, 11, 0.1); color: var(--warning); }
+
+/* Estilo da data de vencimento */
+.due-date {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Estilos do Modal (Overlay e Conteúdo)
+   ========================================================================== */
+
+/* O Overlay (fundo escuro semi-transparente) */
+.modal-overlay {
+  position: fixed; /* Fica fixo na tela, mesmo com scroll */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(17, 24, 39, 0.8); /* Fundo escuro com 80% de opacidade */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Garante que fique acima de todo o resto */
+}
+
+/* O Conteúdo do Modal (a caixa branca/escura no centro) */
+.modal-content {
+  background-color: var(--surface-1);
+  padding: 2rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+  width: 90%;
+  max-width: 500px; /* Largura máxima para não ficar gigante em telas grandes */
+  outline: none;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+/* ==========================================================================
+   Estilos para o Formulário de Edição no Modal (VERSÃO CORRIGIDA)
+   ========================================================================== */
+
+.edit-form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Espaçamento consistente entre os grupos */
+}
+
+/* Garante que a label fique sempre acima do seu campo */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Estilo unificado para todos os campos do formulário */
+.edit-form-content input[type="text"],
+.edit-form-content textarea,
+.edit-form-content select,
+.edit-form-content input[type="date"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--surface-2);
+  color: var(--text-primary);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.edit-form-content textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* --- A CORREÇÃO PRINCIPAL ESTÁ AQUI --- */
+
+/* Estiliza as opções dentro dos dropdowns */
+.edit-form-content select option {
+  background-color: var(--surface-2); /* Fundo escuro para as opções */
+  color: var(--text-primary); /* Texto claro para as opções */
+}
+
+/* -------------------------------------- */
+
+.edit-form-content input:focus,
+.edit-form-content textarea:focus,
+.edit-form-content select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Container para os campos lado a lado */
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Ações do modal (botões) */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
 }
