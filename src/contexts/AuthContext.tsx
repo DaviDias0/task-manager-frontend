@@ -1,11 +1,6 @@
-// src/contexts/AuthContext.tsx
-
-// A importação foi dividida em duas linhas
 import { createContext, useState, useEffect, useContext } from 'react';
 import type { ReactNode } from 'react'; // Importação exclusiva para o TIPO
-
 import { useNavigate } from 'react-router-dom';
-import * as api from '../services/api';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -21,6 +16,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Verifica a existência do token no localStorage ao carregar a aplicação
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -45,11 +41,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider value={value}>
+      {/* Não renderiza os filhos até a verificação inicial do token terminar */}
       {!loading && children}
     </AuthContext.Provider>
   );
 }
 
+// Hook customizado para consumir o contexto de autenticação
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
