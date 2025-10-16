@@ -1,5 +1,3 @@
-// src/pages/TasksPage.tsx
-
 import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -47,22 +45,13 @@ export function TasksPage() {
     try {
       await createTask(title, description, priority, dueDate);
       toast.success('Tarefa adicionada!');
-      fetchTasks(); // Mantemos o fetch aqui para pegar o ID gerado pelo banco
+      fetchTasks();
     } catch (error) {
       toast.error('Não foi possível adicionar a tarefa.');
     }
   };
 
-  // Esta função agora serve como um "recarregador" manual se precisarmos
-  const handleUpdateTask = async (id: number, data: Partial<Task>) => {
-    try {
-      await updateTask(id, data);
-      toast.success('Tarefa atualizada!');
-      fetchTasks();
-    } catch (error) {
-      toast.error("Falha ao atualizar a tarefa.");
-    }
-  };
+  // A FUNÇÃO 'handleUpdateTask' FOI REMOVIDA DAQUI
 
   const handleDeleteTask = async (id: number) => {
     if (window.confirm("Tem certeza que deseja deletar esta tarefa?")) {
@@ -81,25 +70,17 @@ export function TasksPage() {
   const handleOpenEditModal = (task: Task) => setEditingTask(task);
   const handleCloseModal = () => setEditingTask(null);
 
-  // --- FUNÇÃO ATUALIZADA COM LÓGICA OTIMISTA ---
   const handleSaveChanges = async (id: number, data: Partial<Task>) => {
-    // 1. Salva o estado atual para possível reversão
     const originalTasks = [...tasks];
-
-    // 2. Atualiza a UI instantaneamente
     const updatedTasks = tasks.map(task =>
-      task.id === id ? { ...task, ...data } : task
+      task.id === id ? { ...task, ...data } as Task : task
     );
     setTasks(updatedTasks);
-    handleCloseModal(); // Fecha o modal imediatamente
+    handleCloseModal();
     toast.success('Tarefa atualizada!');
-
-    // 3. Envia a requisição para a API em segundo plano
     try {
       await updateTask(id, data);
-      // Sucesso! Não precisamos fazer nada, a UI já está correta.
     } catch (error) {
-      // 4. Se falhar, reverte a UI para o estado original
       toast.error('Falha ao salvar no servidor. Restaurando dados.');
       setTasks(originalTasks);
     }
@@ -115,7 +96,6 @@ export function TasksPage() {
         <summary>Adicionar Nova Tarefa</summary>
         <AddTaskForm onTaskAdded={handleTaskAdded} />
       </details>
-
       <div className="search-container">
         <input
           type="text"
@@ -125,7 +105,6 @@ export function TasksPage() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-
       <div className="sort-container">
         <div className="sort-options">
           <span>Ordenar por:</span>
@@ -137,7 +116,6 @@ export function TasksPage() {
           {order === 'asc' ? '↑ Ascendente' : '↓ Descendente'}
         </button>
       </div>
-
       <div className="task-list">
         {loading ? (
           <>
@@ -156,32 +134,16 @@ export function TasksPage() {
               </motion.div>
             ) : (
               filteredTasks.map(task => (
-                <motion.div
-                  key={task.id}
-                  layout
-                  initial={{ opacity: 0, y: 50, scale: 0.3 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-                >
-                  <TaskCard
-                    task={task}
-                    onDelete={handleDeleteTask}
-                    onEdit={handleOpenEditModal}
-                  />
+                <motion.div key={task.id} layout initial={{ opacity: 0, y: 50, scale: 0.3 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}>
+                  <TaskCard task={task} onDelete={handleDeleteTask} onEdit={handleOpenEditModal} />
                 </motion.div>
               ))
             )}
           </AnimatePresence>
         )}
       </div>
-
       {editingTask && (
-        <EditTaskModal
-          isOpen={!!editingTask}
-          onRequestClose={handleCloseModal}
-          task={editingTask}
-          onSave={handleSaveChanges}
-        />
+        <EditTaskModal isOpen={!!editingTask} onRequestClose={handleCloseModal} task={editingTask} onSave={handleSaveChanges} />
       )}
     </div>
   );
