@@ -2,31 +2,17 @@
 
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from '../contexts/AuthContext';
-import { LoginPage } from './LoginPage';
+import { MemoryRouter } from 'react-router-dom'; // Usamos MemoryRouter para testes
+import App from '../App'; // Importamos o App principal
 import { loginUser } from '../services/api';
-// NOVO: Importamos o ToastContainer para que as mensagens possam ser renderizadas
-import { ToastContainer } from 'react-toastify'; 
 
 jest.mock('../services/api');
 
-// Função auxiliar para renderizar o componente com todos os provedores
-const renderComponent = () => {
-  render(
-    <BrowserRouter>
-      <AuthProvider>
-        {/* Adicionamos o ToastContainer aqui */}
-        <ToastContainer />
-        <LoginPage />
-      </AuthProvider>
-    </BrowserRouter>
-  );
-};
-
 describe('LoginPage', () => {
+  // O render agora acontece dentro de cada teste para ser mais explícito
+
   it('should render the login form elements correctly', () => {
-    renderComponent();
+    render(<MemoryRouter><App /></MemoryRouter>); // Renderiza o App
     expect(screen.getByPlaceholderText(/seu e-mail/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/sua senha/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /entrar/i })).toBeInTheDocument();
@@ -34,7 +20,7 @@ describe('LoginPage', () => {
 
   it('should allow the user to type into the fields', async () => {
     const user = userEvent.setup();
-    renderComponent();
+    render(<MemoryRouter><App /></MemoryRouter>);
     const emailInput = screen.getByPlaceholderText(/seu e-mail/i);
     const passwordInput = screen.getByPlaceholderText(/sua senha/i);
     await user.type(emailInput, 'davi@teste.com');
@@ -47,14 +33,29 @@ describe('LoginPage', () => {
     const user = userEvent.setup();
     (loginUser as jest.Mock).mockRejectedValueOnce(new Error('Falha no login'));
     
-    renderComponent();
+    render(<MemoryRouter><App /></MemoryRouter>);
 
     await user.type(screen.getByPlaceholderText(/seu e-mail/i), 'email@errado.com');
     await user.type(screen.getByPlaceholderText(/sua senha/i), 'senhaerrada');
     await user.click(screen.getByRole('button', { name: /entrar/i }));
 
-    // Agora, a mensagem de erro será renderizada e o teste a encontrará
-    const errorMessage = await screen.findByText(/E-mail ou senha inválidos/i);
-    expect(errorMessage).toBeInTheDocument();
+    expect(await screen.findByText(/E-mail ou senha inválidos/i)).toBeInTheDocument();
+  });
+
+  // Teste de Sucesso Corrigido
+  it('should navigate to tasks page on successful login', async () => {
+    const user = userEvent.setup();
+    const fakeToken = 'fake-jwt-token';
+    (loginUser as jest.Mock).mockResolvedValueOnce({ token: fakeToken });
+
+    render(<MemoryRouter><App /></MemoryRouter>);
+
+    await user.type(screen.getByPlaceholderText(/seu e-mail/i), 'davi@correto.com');
+    await user.type(screen.getByPlaceholderText(/sua senha/i), 'senhacorreta');
+    await user.click(screen.getByRole('button', { name: /entrar/i }));
+
+    // Assert: Verificamos se a navegação aconteceu esperando por um elemento da TasksPage
+    const tasksHeading = await screen.findByRole('heading', { name: /minhas tarefas/i });
+    expect(tasksHeading).toBeInTheDocument();
   });
 });
