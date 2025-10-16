@@ -23,7 +23,7 @@
 
 ## 🔗 Links
 
-- **Frontend (Vercel):** [**Acesse a aplicação aqui**](https://task-manager-frontend-inky-one.vercel.app/login)
+- **Frontend (Vercel):** [**Acesse a aplicação aqui**](https://task-manager-frontend-git-main-sdavi01724-9026s-projects.vercel.app/)
 - **Backend (Render):** `https://task-manager-api-jihw.onrender.com`
 - **Repositório do Backend:** [**DaviDias0/task-manager-api**](https://github.com/DaviDias0/task-manager-api)
 
