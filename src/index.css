@@ -521,4 +521,127 @@ body {
   margin-top: 1.5rem;
   border-top: 1px solid var(--border-color);
   padding-top: 1.5rem;
+}/* ==========================================================================
+   Layout Principal com Sidebar
+   ========================================================================== */
+
+.main-layout {
+  display: flex;
+  height: 100vh; /* Ocupa a altura total da tela */
+}
+
+.sidebar {
+  width: 250px;
+  background-color: var(--surface-1);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  box-sizing: border-box; /* Garante que o padding não aumente a largura */
+}
+
+.content-area {
+  flex: 1; /* Ocupa todo o espaço restante */
+  overflow-y: auto; /* Adiciona scroll se o conteúdo for maior que a tela */
+  padding: 2rem;
+}
+
+/* Estilos básicos para os elementos da sidebar (podemos refinar depois) */
+.sidebar-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1; /* Empurra o rodapé para baixo */
+}
+
+.sidebar-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav a:hover {
+  background-color: var(--surface-2);
+  color: var(--text-primary);
+}
+
+/* O NavLink adiciona a classe 'active' ao link da página atual */
+.sidebar-nav a.active {
+  background-color: var(--accent-blue);
+  color: white;
+}
+
+.sidebar-footer {
+  margin-top: auto; /* Garante que fique no final */
+}
+
+.logout-button-sidebar {
+  width: 100%;
+  background-color: var(--surface-2);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  text-align: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.logout-button-sidebar:hover {
+  background-color: var(--error);
+  color: white;
+  border-color: var(--error);
+}
+/* ==========================================================================
+   Estilos da Página de Perfil
+   ========================================================================== */
+
+.profile-page h1 {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.profile-card {
+  background-color: var(--surface-1);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-info + .profile-info {
+  margin-top: 1.5rem; /* Adiciona espaço entre os campos */
+}
+
+.profile-info strong {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+.profile-info span {
+  color: var(--text-primary);
+  font-size: 1.125rem;
 }

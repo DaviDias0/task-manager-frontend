@@ -1,5 +1,3 @@
-// src/services/api.ts
-
 import axios from 'axios';
 import type { Task } from '../types/types';
 
@@ -17,6 +15,7 @@ api.interceptors.request.use(config => {
 
 // FUNÇÕES DE AUTENTICAÇÃO
 export const registerUser = (name: string, email: string, password: string) => api.post('/auth/register', { name, email, password });
+
 export const loginUser = async (email: string, password: string) => {
   const response = await api.post('/auth/login', { email, password });
   return response.data;
@@ -45,5 +44,11 @@ export const updateTask = async (id: number, data: Partial<Task>) => {
 
 export const deleteTask = async (id: number) => {
   const response = await api.delete(`/tasks/${id}`);
+  return response.data;
+};
+
+// --- NOVA FUNÇÃO PARA BUSCAR O PERFIL DO USUÁRIO ---
+export const getProfile = async () => {
+  const response = await api.get('/auth/profile');
   return response.data;
 };
