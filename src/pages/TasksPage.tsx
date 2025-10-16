@@ -1,9 +1,8 @@
-// src/pages/TasksPage.tsx
-
 import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { motion, AnimatePresence } from 'framer-motion';
+
 import { useAuth } from '../contexts/AuthContext';
 import { getTasks, updateTask, deleteTask, createTask } from '../services/api';
 import type { Task } from '../types/types';
@@ -25,8 +24,10 @@ export function TasksPage() {
       setTasks(data);
     } catch (error) {
       console.error("Falha ao buscar tarefas:", error);
-      toast.error("Sua sessão pode ter expirado. Por favor, faça o login novamente.");
-      auth?.logout();
+      if (auth?.logout) {
+        toast.error("Sua sessão pode ter expirado. Por favor, faça o login novamente.");
+        auth.logout();
+      }
     } finally {
       setLoading(false);
     }
@@ -83,15 +84,16 @@ export function TasksPage() {
   );
 
   return (
-    <main className="app-container">
-      <header className="header">
-        <h1>Minhas Tarefas</h1>
-        <button onClick={auth?.logout} className="logout-button">Sair</button>
-      </header>
+    // O container principal não precisa mais do padding/margin do 'app-container'
+    <div className="tasks-page-container">
+
+      {/* O <header> com h1 e botão de sair foi REMOVIDO daqui */}
+
       <details className="add-task-form" open>
         <summary>Adicionar Nova Tarefa</summary>
         <AddTaskForm onTaskAdded={handleTaskAdded} />
       </details>
+
       <div className="search-container">
         <input
           type="text"
@@ -101,6 +103,7 @@ export function TasksPage() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
+
       <div className="task-list">
         {loading ? (
           <>
@@ -137,6 +140,7 @@ export function TasksPage() {
           </AnimatePresence>
         )}
       </div>
+
       {editingTask && (
         <EditTaskModal
           isOpen={!!editingTask}
@@ -145,6 +149,6 @@ export function TasksPage() {
           onSave={handleSaveChanges}
         />
       )}
-    </main>
+    </div>
   );
 }
