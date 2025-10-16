@@ -1,3 +1,5 @@
+// src/pages/TasksPage.tsx
+
 import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -17,10 +19,12 @@ export function TasksPage() {
   const [loading, setLoading] = useState(true);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('createdAt');
+  const [order, setOrder] = useState('desc');
 
   const fetchTasks = async () => {
     try {
-      const data = await getTasks();
+      const data = await getTasks(sortBy, order);
       setTasks(data);
     } catch (error) {
       console.error("Falha ao buscar tarefas:", error);
@@ -37,18 +41,19 @@ export function TasksPage() {
     if (auth?.isAuthenticated) {
       fetchTasks();
     }
-  }, [auth?.isAuthenticated]);
+  }, [auth?.isAuthenticated, sortBy, order]);
 
   const handleTaskAdded = async (title: string, description: string, priority: string, dueDate: string) => {
     try {
       await createTask(title, description, priority, dueDate);
       toast.success('Tarefa adicionada!');
-      fetchTasks();
+      fetchTasks(); // Mantemos o fetch aqui para pegar o ID gerado pelo banco
     } catch (error) {
       toast.error('Não foi possível adicionar a tarefa.');
     }
   };
 
+  // Esta função agora serve como um "recarregador" manual se precisarmos
   const handleUpdateTask = async (id: number, data: Partial<Task>) => {
     try {
       await updateTask(id, data);
@@ -61,12 +66,14 @@ export function TasksPage() {
 
   const handleDeleteTask = async (id: number) => {
     if (window.confirm("Tem certeza que deseja deletar esta tarefa?")) {
+      const originalTasks = [...tasks];
+      setTasks(tasks.filter(task => task.id !== id));
+      toast.success('Tarefa deletada instantaneamente!');
       try {
         await deleteTask(id);
-        toast.success('Tarefa deletada!');
-        fetchTasks();
       } catch (error) {
-        toast.error("Falha ao deletar a tarefa.");
+        toast.error("Falha ao deletar no servidor. Restaurando tarefa.");
+        setTasks(originalTasks);
       }
     }
   };
@@ -74,9 +81,28 @@ export function TasksPage() {
   const handleOpenEditModal = (task: Task) => setEditingTask(task);
   const handleCloseModal = () => setEditingTask(null);
 
+  // --- FUNÇÃO ATUALIZADA COM LÓGICA OTIMISTA ---
   const handleSaveChanges = async (id: number, data: Partial<Task>) => {
-    await handleUpdateTask(id, data);
-    handleCloseModal();
+    // 1. Salva o estado atual para possível reversão
+    const originalTasks = [...tasks];
+
+    // 2. Atualiza a UI instantaneamente
+    const updatedTasks = tasks.map(task =>
+      task.id === id ? { ...task, ...data } : task
+    );
+    setTasks(updatedTasks);
+    handleCloseModal(); // Fecha o modal imediatamente
+    toast.success('Tarefa atualizada!');
+
+    // 3. Envia a requisição para a API em segundo plano
+    try {
+      await updateTask(id, data);
+      // Sucesso! Não precisamos fazer nada, a UI já está correta.
+    } catch (error) {
+      // 4. Se falhar, reverte a UI para o estado original
+      toast.error('Falha ao salvar no servidor. Restaurando dados.');
+      setTasks(originalTasks);
+    }
   };
 
   const filteredTasks = tasks.filter(task =>
@@ -84,11 +110,7 @@ export function TasksPage() {
   );
 
   return (
-    // O container principal não precisa mais do padding/margin do 'app-container'
     <div className="tasks-page-container">
-
-      {/* O <header> com h1 e botão de sair foi REMOVIDO daqui */}
-
       <details className="add-task-form" open>
         <summary>Adicionar Nova Tarefa</summary>
         <AddTaskForm onTaskAdded={handleTaskAdded} />
@@ -102,6 +124,18 @@ export function TasksPage() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+      </div>
+
+      <div className="sort-container">
+        <div className="sort-options">
+          <span>Ordenar por:</span>
+          <button className={`sort-button ${sortBy === 'createdAt' ? 'active' : ''}`} onClick={() => setSortBy('createdAt')}>Criação</button>
+          <button className={`sort-button ${sortBy === 'dueDate' ? 'active' : ''}`} onClick={() => setSortBy('dueDate')}>Vencimento</button>
+          <button className={`sort-button ${sortBy === 'priority' ? 'active' : ''}`} onClick={() => setSortBy('priority')}>Prioridade</button>
+        </div>
+        <button className="sort-button order-button" onClick={() => setOrder(order === 'asc' ? 'desc' : 'asc')}>
+          {order === 'asc' ? '↑ Ascendente' : '↓ Descendente'}
+        </button>
       </div>
 
       <div className="task-list">
