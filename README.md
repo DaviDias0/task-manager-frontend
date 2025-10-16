@@ -1,73 +1,99 @@
-# React + TypeScript + Vite
+# 🎯 Task Manager - Full-Stack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  Um gerenciador de tarefas completo construído com React, Node.js, e PostgreSQL, demonstrando funcionalidades de CRUD, autenticação JWT, e um ambiente de desenvolvimento e produção containerizado com Docker.
+</p>
 
-Currently, two official plugins are available:
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Concluído-brightgreen?style=for-the-badge" />
+  <img src="https://img.shields.io/github/license/DaviDias0/task-manager-frontend?style=for-the-badge&color=blue" />
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 📸 Demo da Aplicação
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+<div align="center">
 
-## Expanding the ESLint configuration
+**[INSIRA AQUI UM GIF DA APLICAÇÃO EM FUNCIONAMENTO]**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+*Um GIF mostrando o fluxo de login, criação, edição e exclusão de tarefas.*
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+</div>
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🔗 Links
+
+- **Frontend (Vercel):** [Acesse a aplicação aqui](https://task-manager-frontend-eight-kappa.vercel.app/)
+- **Backend (Render):** `https://task-manager-api-jihw.onrender.com`
+- **Repositório do Backend:** [DaviDias0/task-manager-api](https://github.com/DaviDias0/task-manager-api)
+
+---
+
+## ✨ Principais Funcionalidades
+
+- **Autenticação de Usuários:** Sistema completo de registro e login com tokens JWT.
+- **Gerenciamento de Tarefas (CRUD):**
+  - **Criar:** Adicionar novas tarefas com título, descrição, prioridade e data de vencimento.
+  - **Ler:** Visualizar a lista de tarefas com animações de entrada.
+  - **Atualizar:** Editar todos os campos de uma tarefa através de um modal.
+  - **Deletar:** Excluir tarefas com uma janela de confirmação.
+- **Busca em Tempo Real:** Filtrar tarefas por título instantaneamente.
+- **Interface Responsiva:** Design moderno com tema escuro, construído para funcionar em diferentes tamanhos de tela.
+- **Testes Automatizados:** Cobertura de testes para todo o fluxo de autenticação e funcionalidades CRUD da página de tarefas, garantindo a qualidade e estabilidade do código.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+Este projeto foi construído utilizando tecnologias modernas e padrões da indústria para desenvolvimento full-stack.
+
+| Categoria | Tecnologia |
+| --- | --- |
+| **Frontend** | ![React](https://img.shields.io/badge/React-000?style=for-the-badge&logo=react&logoColor=00FF00) ![TypeScript](https://img.shields.io/badge/TypeScript-000?style=for-the-badge&logo=typescript&logoColor=00FF00) ![Vite](https://img.shields.io/badge/Vite-000?style=for-the-badge&logo=vite&logoColor=00FF00) |
+| **Backend** | ![Node.js](https://img.shields.io/badge/Node.js-000?style=for-the-badge&logo=nodedotjs&logoColor=00FF00) ![Express.js](https://img.shields.io/badge/Express.js-000?style=for-the-badge&logo=express&logoColor=00FF00) |
+| **Banco de Dados** | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-000?style=for-the-badge&logo=postgresql&logoColor=00FF00) ![Prisma](https://img.shields.io/badge/Prisma-000?style=for-the-badge&logo=prisma&logoColor=00FF00) |
+| **Testes** | ![Jest](https://img.shields.io/badge/Jest-000?style=for-the-badge&logo=jest&logoColor=00FF00) ![React Testing Library](https://img.shields.io/badge/Testing_Library-000?style=for-the-badge&logo=testinglibrary&logoColor=00FF00) |
+| **DevOps & Ferramentas** | ![Docker](https://img.shields.io/badge/Docker-000?style=for-the-badge&logo=docker&logoColor=00FF00) ![Git](https://img.shields.io/badge/Git-000?style=for-the-badge&logo=git&logoColor=00FF00) ![GitHub](https://img.shields.io/badge/GitHub-000?style=for-the-badge&logo=github&logoColor=00FF00) ![Vercel](https://img.shields.io/badge/Vercel-000?style=for-the-badge&logo=vercel&logoColor=00FF00) ![Render](https://img.shields.io/badge/Render-000?style=for-the-badge&logo=render&logoColor=00FF00) |
+
+---
+
+## 🚀 Rodando o Projeto Localmente
+
+Para rodar este projeto na sua máquina, siga os passos abaixo. Você precisará ter o [Node.js](https://nodejs.org/en/) e o [Docker](https://www.docker.com/products/docker-desktop/) instalados.
+
+### Backend (API)
+```bash
+# 1. Clone o repositório do backend
+git clone [https://github.com/DaviDias0/task-manager-api.git](https://github.com/DaviDias0/task-manager-api.git)
+
+# 2. Navegue até a pasta do projeto
+cd task-manager-api
+
+# 3. Crie um arquivo .env com base no .env.example
+# e configure a sua DATABASE_URL e JWT_SECRET
+
+# 4. Inicie os containers do Docker
+docker-compose up --build -d
 ```
+O backend estará rodando em `http://localhost:3000`.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Frontend
+```bash
+# 1. Clone o repositório do frontend
+git clone [https://github.com/DaviDias0/task-manager-frontend.git](https://github.com/DaviDias0/task-manager-frontend.git)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# 2. Navegue até a pasta do projeto
+cd task-manager-frontend
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 3. Instale as dependências
+npm install
+
+# 4. Crie um arquivo .env.local e defina a variável de ambiente
+# VITE_API_URL=http://localhost:3000
+
+# 5. Inicie a aplicação
+npm run dev
 ```
+A aplicação estará acessível em `http://localhost:5173` (ou a porta que o Vite indicar).
