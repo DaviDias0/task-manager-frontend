@@ -17,10 +17,12 @@ export function TasksPage() {
   const [loading, setLoading] = useState(true);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('createdAt');
+  const [order, setOrder] = useState('desc');
 
   const fetchTasks = async () => {
     try {
-      const data = await getTasks();
+      const data = await getTasks(sortBy, order);
       setTasks(data);
     } catch (error) {
       console.error("Falha ao buscar tarefas:", error);
@@ -37,7 +39,7 @@ export function TasksPage() {
     if (auth?.isAuthenticated) {
       fetchTasks();
     }
-  }, [auth?.isAuthenticated]);
+  }, [auth?.isAuthenticated, sortBy, order]);
 
   const handleTaskAdded = async (title: string, description: string, priority: string, dueDate: string) => {
     try {
@@ -49,24 +51,18 @@ export function TasksPage() {
     }
   };
 
-  const handleUpdateTask = async (id: number, data: Partial<Task>) => {
-    try {
-      await updateTask(id, data);
-      toast.success('Tarefa atualizada!');
-      fetchTasks();
-    } catch (error) {
-      toast.error("Falha ao atualizar a tarefa.");
-    }
-  };
+  // A FUNÇÃO 'handleUpdateTask' FOI REMOVIDA DAQUI
 
   const handleDeleteTask = async (id: number) => {
     if (window.confirm("Tem certeza que deseja deletar esta tarefa?")) {
+      const originalTasks = [...tasks];
+      setTasks(tasks.filter(task => task.id !== id));
+      toast.success('Tarefa deletada instantaneamente!');
       try {
         await deleteTask(id);
-        toast.success('Tarefa deletada!');
-        fetchTasks();
       } catch (error) {
-        toast.error("Falha ao deletar a tarefa.");
+        toast.error("Falha ao deletar no servidor. Restaurando tarefa.");
+        setTasks(originalTasks);
       }
     }
   };
@@ -75,8 +71,19 @@ export function TasksPage() {
   const handleCloseModal = () => setEditingTask(null);
 
   const handleSaveChanges = async (id: number, data: Partial<Task>) => {
-    await handleUpdateTask(id, data);
+    const originalTasks = [...tasks];
+    const updatedTasks = tasks.map(task =>
+      task.id === id ? { ...task, ...data } as Task : task
+    );
+    setTasks(updatedTasks);
     handleCloseModal();
+    toast.success('Tarefa atualizada!');
+    try {
+      await updateTask(id, data);
+    } catch (error) {
+      toast.error('Falha ao salvar no servidor. Restaurando dados.');
+      setTasks(originalTasks);
+    }
   };
 
   const filteredTasks = tasks.filter(task =>
@@ -84,16 +91,11 @@ export function TasksPage() {
   );
 
   return (
-    // O container principal não precisa mais do padding/margin do 'app-container'
     <div className="tasks-page-container">
-
-      {/* O <header> com h1 e botão de sair foi REMOVIDO daqui */}
-
       <details className="add-task-form" open>
         <summary>Adicionar Nova Tarefa</summary>
         <AddTaskForm onTaskAdded={handleTaskAdded} />
       </details>
-
       <div className="search-container">
         <input
           type="text"
@@ -103,7 +105,17 @@ export function TasksPage() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-
+      <div className="sort-container">
+        <div className="sort-options">
+          <span>Ordenar por:</span>
+          <button className={`sort-button ${sortBy === 'createdAt' ? 'active' : ''}`} onClick={() => setSortBy('createdAt')}>Criação</button>
+          <button className={`sort-button ${sortBy === 'dueDate' ? 'active' : ''}`} onClick={() => setSortBy('dueDate')}>Vencimento</button>
+          <button className={`sort-button ${sortBy === 'priority' ? 'active' : ''}`} onClick={() => setSortBy('priority')}>Prioridade</button>
+        </div>
+        <button className="sort-button order-button" onClick={() => setOrder(order === 'asc' ? 'desc' : 'asc')}>
+          {order === 'asc' ? '↑ Ascendente' : '↓ Descendente'}
+        </button>
+      </div>
       <div className="task-list">
         {loading ? (
           <>
@@ -122,32 +134,16 @@ export function TasksPage() {
               </motion.div>
             ) : (
               filteredTasks.map(task => (
-                <motion.div
-                  key={task.id}
-                  layout
-                  initial={{ opacity: 0, y: 50, scale: 0.3 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-                >
-                  <TaskCard
-                    task={task}
-                    onDelete={handleDeleteTask}
-                    onEdit={handleOpenEditModal}
-                  />
+                <motion.div key={task.id} layout initial={{ opacity: 0, y: 50, scale: 0.3 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}>
+                  <TaskCard task={task} onDelete={handleDeleteTask} onEdit={handleOpenEditModal} />
                 </motion.div>
               ))
             )}
           </AnimatePresence>
         )}
       </div>
-
       {editingTask && (
-        <EditTaskModal
-          isOpen={!!editingTask}
-          onRequestClose={handleCloseModal}
-          task={editingTask}
-          onSave={handleSaveChanges}
-        />
+        <EditTaskModal isOpen={!!editingTask} onRequestClose={handleCloseModal} task={editingTask} onSave={handleSaveChanges} />
       )}
     </div>
   );

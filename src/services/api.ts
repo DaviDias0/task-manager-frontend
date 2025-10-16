@@ -1,4 +1,5 @@
 import axios from 'axios';
+// O TIPO 'Priority' FOI REMOVIDO DA IMPORTAÇÃO
 import type { Task } from '../types/types';
 
 const api = axios.create({
@@ -21,9 +22,16 @@ export const loginUser = async (email: string, password: string) => {
   return response.data;
 };
 
+export const getProfile = async () => {
+  const response = await api.get('/auth/profile');
+  return response.data;
+};
+
 // FUNÇÕES DE TAREFAS
-export const getTasks = async (): Promise<Task[]> => {
-  const response = await api.get('/tasks');
+export const getTasks = async (sortBy = 'createdAt', order = 'desc'): Promise<Task[]> => {
+  const response = await api.get('/tasks', {
+    params: { sortBy, order },
+  });
   return response.data;
 };
 
@@ -44,11 +52,5 @@ export const updateTask = async (id: number, data: Partial<Task>) => {
 
 export const deleteTask = async (id: number) => {
   const response = await api.delete(`/tasks/${id}`);
-  return response.data;
-};
-
-// --- NOVA FUNÇÃO PARA BUSCAR O PERFIL DO USUÁRIO ---
-export const getProfile = async () => {
-  const response = await api.get('/auth/profile');
   return response.data;
 };
