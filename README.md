@@ -15,9 +15,7 @@
 
 <div align="center">
 
-**[INSIRA AQUI UM GIF DA APLICAÇÃO EM FUNCIONAMENTO]**
-
-*Um GIF mostrando o fluxo de login, criação, edição e exclusão de tarefas.*
+![Demo da Aplicação](https://raw.githubusercontent.com/DaviDias0/task-manager-frontend/main/assets/demo.gif)
 
 </div>
 
@@ -25,20 +23,20 @@
 
 ## 🔗 Links
 
-- **Frontend (Vercel):** [Acesse a aplicação aqui](https://task-manager-frontend-eight-kappa.vercel.app/)
+- **Frontend (Vercel):** [**Acesse a aplicação aqui**](https://task-manager-frontend-eight-kappa.vercel.app/)
 - **Backend (Render):** `https://task-manager-api-jihw.onrender.com`
-- **Repositório do Backend:** [DaviDias0/task-manager-api](https://github.com/DaviDias0/task-manager-api)
+- **Repositório do Backend:** [**DaviDias0/task-manager-api**](https://github.com/DaviDias0/task-manager-api)
 
 ---
 
 ## ✨ Principais Funcionalidades
 
-- **Autenticação de Usuários:** Sistema completo de registro e login com tokens JWT.
+- **Autenticação de Usuários:** Sistema completo de registro e login com tokens JWT e rotas protegidas.
 - **Gerenciamento de Tarefas (CRUD):**
   - **Criar:** Adicionar novas tarefas com título, descrição, prioridade e data de vencimento.
-  - **Ler:** Visualizar a lista de tarefas com animações de entrada.
+  - **Ler:** Visualizar a lista de tarefas com animações de entrada e loading states (skeletons).
   - **Atualizar:** Editar todos os campos de uma tarefa através de um modal.
-  - **Deletar:** Excluir tarefas com uma janela de confirmação.
+  - **Deletar:** Excluir tarefas com uma janela de confirmação e animação de saída.
 - **Busca em Tempo Real:** Filtrar tarefas por título instantaneamente.
 - **Interface Responsiva:** Design moderno com tema escuro, construído para funcionar em diferentes tamanhos de tela.
 - **Testes Automatizados:** Cobertura de testes para todo o fluxo de autenticação e funcionalidades CRUD da página de tarefas, garantindo a qualidade e estabilidade do código.
