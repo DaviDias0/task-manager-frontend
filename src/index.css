@@ -623,3 +623,34 @@ body {
   background-color: rgba(245, 158, 11, 0.1);
   color: var(--warning);
 }
+/* Estilo para o dropdown de Role na tabela Admin */
+/* Estilo ATUALIZADO para o dropdown de Role na tabela Admin */
+.role-select {
+  padding: 4px 8px; /* Reduz o padding para ficar mais compacto */
+  background-color: var(--surface-2);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 6px;
+  font-size: 0.75rem; /* Tamanho da fonte igual aos badges */
+  font-weight: 500; /* Peso da fonte */
+  cursor: pointer;
+  appearance: none; /* Remove a seta padrão do navegador */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%239CA3AF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E"); /* Adiciona uma seta SVG customizada */
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1.25em; /* Tamanho da seta */
+  padding-right: 2rem; /* Espaço para a seta */
+  min-width: 90px; /* Largura mínima */
+}
+
+.role-select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Garante que as opções continuem legíveis */
+.role-select option {
+  background-color: var(--surface-2);
+  color: var(--text-primary);
+}
