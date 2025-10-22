@@ -562,3 +562,64 @@ body {
   color: var(--text-primary);
   font-size: 1.125rem;
 }
+
+/* ==========================================================================
+   Estilos da Página de Administração
+   ========================================================================== */
+
+.admin-page h1 {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-user-table {
+  width: 100%;
+  border-collapse: collapse; /* Remove espaços entre as células */
+  margin-top: 2rem;
+  background-color: var(--surface-1);
+  border-radius: 8px;
+  overflow: hidden; /* Garante que o border-radius funcione */
+  border: 1px solid var(--border-color);
+}
+
+.admin-user-table th,
+.admin-user-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-user-table th {
+  background-color: var(--surface-2);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.admin-user-table tbody tr:last-child td {
+  border-bottom: none; /* Remove a borda da última linha */
+}
+
+.admin-user-table tbody tr:hover {
+  background-color: var(--surface-2);
+}
+
+.role-badge {
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.role-user {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--accent-blue);
+}
+
+.role-admin {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+}
