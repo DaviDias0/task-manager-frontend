@@ -654,3 +654,40 @@ body {
   background-color: var(--surface-2);
   color: var(--text-primary);
 }
+
+/* Estilos para a seção de toggle do formulário AddTask */
+.add-task-toggle-section {
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  margin-bottom: 2rem;
+  padding: 1rem 1.5rem; /* Ajuste o padding conforme necessário */
+}
+
+.add-task-toggle-button {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0; /* Remove padding padrão do botão */
+}
+
+.add-task-toggle-button svg {
+  transition: transform 0.3s ease;
+}
+
+/* Wrapper para o conteúdo do formulário (para padding interno) */
+.add-task-form-content-wrapper {
+  padding-top: 1.5rem; /* Espaço entre o botão e o formulário */
+}
+
+/* Remove margens extras do formulário interno */
+.add-task-form-content-wrapper .add-task-content {
+  margin-top: 0;
+}
