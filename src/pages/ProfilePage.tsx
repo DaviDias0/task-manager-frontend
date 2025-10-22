@@ -1,15 +1,15 @@
-// src/pages/ProfilePage.tsx
-
 import { useState, useEffect } from 'react';
 import { getProfile } from '../services/api';
 import { toast } from 'react-toastify';
 
-// Vamos criar um tipo para os dados do perfil para usar no estado
+// Define the shape of the user profile data
 interface UserProfile {
   id: number;
-  name: string;
+  name: string | null;
   email: string;
+  role: 'USER' | 'ADMIN';
   createdAt: string;
+  updatedAt: string;
 }
 
 export function ProfilePage() {
@@ -17,52 +17,71 @@ export function ProfilePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('ProfilePage: useEffect started.'); // Log P1
     const fetchProfile = async () => {
+      console.log('ProfilePage: fetchProfile started.'); // Log P2
       try {
-        const data = await getProfile();
+        console.log('ProfilePage: Calling await getProfile()...'); // Log P3
+        const data: UserProfile = await getProfile(); // Explicitly type the data
+        console.log('ProfilePage: getProfile returned:', data); // Log P4
         setProfile(data);
       } catch (error) {
-        toast.error('Não foi possível carregar os dados do perfil.');
+        console.error('ProfilePage: Error caught in fetchProfile:', error); // Log P5 (Error)
+        toast.error('Could not load profile data.');
       } finally {
+        console.log('ProfilePage: fetchProfile finished, setLoading(false).'); // Log P6
         setLoading(false);
       }
     };
 
     fetchProfile();
-  }, []); // O array vazio garante que isso rode apenas uma vez
+  }, []); // Empty array ensures this runs only once on mount
 
-  // Formata a data para um formato mais legível
+  // Utility function to format date string
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('pt-BR', {
       day: '2-digit',
-      month: 'long',
+      month: 'long', // Use 'long' for month name (e.g., Outubro)
       year: 'numeric',
     });
   };
 
+  // Show loading indicator
   if (loading) {
-    return <h1>Carregando perfil...</h1>; // Podemos adicionar um Skeleton aqui depois
+    return <h1>Loading profile...</h1>; // We can add a Skeleton here later
   }
 
+  // Show error message if profile couldn't be loaded
   if (!profile) {
-    return <h1>Não foi possível carregar o perfil.</h1>;
+    return <h1>Could not load profile.</h1>;
   }
 
+  // Display profile data
   return (
     <div className="profile-page">
-      <h1>Meu Perfil</h1>
+      <h1>My Profile</h1>
       <div className="profile-card">
         <div className="profile-info">
-          <strong>Nome:</strong>
-          <span>{profile.name}</span>
+          <strong>Name:</strong>
+          <span>{profile.name || 'Not provided'}</span>
         </div>
         <div className="profile-info">
           <strong>Email:</strong>
           <span>{profile.email}</span>
         </div>
+         <div className="profile-info">
+          <strong>Role:</strong>
+          <span className={`role-badge role-${profile.role.toLowerCase()}`}>
+            {profile.role}
+          </span>
+        </div>
         <div className="profile-info">
-          <strong>Membro desde:</strong>
+          <strong>Member Since:</strong>
           <span>{formatDate(profile.createdAt)}</span>
+        </div>
+         <div className="profile-info">
+          <strong>Last Updated:</strong>
+          <span>{formatDate(profile.updatedAt)}</span>
         </div>
       </div>
     </div>

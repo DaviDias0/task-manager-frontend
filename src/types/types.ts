@@ -1,14 +1,7 @@
-export type TaskStatus = 'pending' | 'in-progress' | 'done';
-
 // src/types/types.ts
 
-// Apenas o tipo Task é necessário aqui
-// src/types/types.ts
-
-// src/types/types.ts
-
-// NOVO: Criamos um tipo específico para Priority
-export type Priority = 'BAIXA' | 'MEDIA' | 'ALTA';
+// NOVO: Definimos e exportamos o tipo Role aqui
+export type Role = 'USER' | 'ADMIN';
 
 export type Task = {
   id: number;
@@ -16,12 +9,12 @@ export type Task = {
   description: string | null;
   status: 'PENDENTE' | 'EM_ANDAMENTO' | 'CONCLUIDA';
   createdAt: string;
-  // Agora usamos o novo tipo Priority
-  priority?: Priority;
+  // Usamos o tipo Role aqui também, se já não estiver
+  priority?: 'BAIXA' | 'MEDIA' | 'ALTA'; // Mantendo priority como string literal por enquanto
   dueDate?: string | null;
+  // Se você quiser usar o tipo Role aqui também, seria:
+  // priority?: Priority; // Assumindo que Priority é 'BAIXA' | 'MEDIA' | 'ALTA'
 };
-export type UpdateTaskData = {
-  title?: string;
-  description?: string;
-  status?: TaskStatus;
-};
+
+// Se você tiver um tipo Priority separado, ele ficaria aqui:
+// export type Priority = 'BAIXA' | 'MEDIA' | 'ALTA';

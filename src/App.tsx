@@ -5,31 +5,33 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { TasksPage } from './pages/TasksPage';
 import { ProfilePage } from './pages/ProfilePage';
-import { AdminPage } from './pages/AdminPage'; // NOVO: Importamos a página de admin
+import { AdminPage } from './pages/AdminPage';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { AdminRoute } from './components/AdminRoute'; // NOVO: Importamos a rota de admin
-import { MainLayout } from './components/MainLayout';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { AdminRoute } from './components/AdminRoute';
+import { MainLayout } from './components/MainLayout'; // Layout principal que inclui a Sidebar
+// A importação do ToastContainer e seu CSS foram REMOVIDAS daqui
+
+// Importação global do Skeleton CSS (mantida aqui ou movida para main.tsx)
 import 'react-loading-skeleton/dist/skeleton.css';
 
 function App() {
   return (
     <AuthProvider>
-      <ToastContainer position="bottom-right" autoClose={3000} theme="dark" />
+      {/* O ToastContainer NÃO está mais aqui */}
       <Routes>
+        {/* Rotas públicas */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
-        {/* Rotas Protegidas por Login */}
+        {/* Rotas protegidas */}
         <Route element={<ProtectedRoute />}>
-          <Route element={<MainLayout />}>
-            {/* Rotas para todos os usuários logados */}
+          <Route element={<MainLayout />}> {/* Layout aplicado a todas as rotas internas */}
+            {/* Rotas para usuários comuns e admins */}
             <Route path="/" element={<TasksPage />} />
             <Route path="/profile" element={<ProfilePage />} />
 
-            {/* Rotas exclusivas para ADMINS */}
+            {/* Rotas exclusivas para admins */}
             <Route element={<AdminRoute />}>
               <Route path="/admin" element={<AdminPage />} />
             </Route>
