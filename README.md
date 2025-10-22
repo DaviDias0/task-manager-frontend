@@ -1,17 +1,17 @@
-# 🎯 Task Manager - Full-Stack
+# <span style="color:#00FF00">🎯 Task Manager - Full-Stack</span>
 
 <p align="center">
   Um gerenciador de tarefas completo e robusto construído com React, Node.js, e PostgreSQL. Demonstra funcionalidades avançadas como CRUD completo, autenticação JWT com sistema de cargos (Roles), painel de administração, testes automatizados, UI Otimista, e um ambiente totalmente containerizado com Docker.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Status-Concluído-brightgreen?style=for-the-badge" />
-  <img src="https://img.shields.io/github/license/DaviDias0/task-manager-frontend?style=for-the-badge&color=blue" />
-  </p>
+  <img src="https://img.shields.io/badge/Status-Concluído-000?style=for-the-badge&labelColor=000&color=00FF00" />
+  <img src="https://img.shields.io/github/license/DaviDias0/task-manager-frontend?style=for-the-badge&color=00FF00&labelColor=000" />
+</p>
 
 ---
 
-## 📸 Demo da Aplicação
+## <span style="color:#00FF00">📸 Demo da Aplicação</span>
 
 <div align="center">
 
@@ -22,69 +22,100 @@
 
 ---
 
-## 🔗 Links
+## <span style="color:#00FF00">🔗 Links</span>
 
-- **Frontend (Vercel):** [**Acesse a aplicação aqui**](https://task-manager-frontend-git-main-sdavi01724-9026s-projects.vercel.app/)
-- **Backend (Render):** `https://task-manager-api-jihw.onrender.com` (API pública)
-- **Repositório do Backend:** [**DaviDias0/task-manager-api**](https://github.com/DaviDias0/task-manager-api)
+<p align="center">
+  <a href="https://task-manager-frontend-git-main-sdavi01724-9026s-projects.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/Ver_Frontend_(Vercel)-000?style=for-the-badge&logo=vercel&logoColor=00FF00" />
+  </a>
+  <a href="https://github.com/DaviDias0/task-manager-api" target="_blank">
+    <img src="https://img.shields.io/badge/Ver_Backend_(GitHub)-000?style=for-the-badge&logo=github&logoColor=00FF00" />
+  </a>
+  </p>
+
+- **URL Base da API (Render):** `https://task-manager-api-jihw.onrender.com`
 
 ---
 
-## ✨ Principais Funcionalidades
+## <span style="color:#00FF00">✨ Principais Funcionalidades</span>
 
 O Task Manager oferece uma experiência completa de gerenciamento de tarefas com foco em performance e usabilidade:
 
-- **Autenticação Segura:**
-  - Registro de novos usuários.
-  - Login com validação e geração de tokens JWT.
-  - Rotas protegidas acessíveis apenas para usuários autenticados.
+- **Autenticação Segura:** Sistema completo de <strong style="color:#00FF00">registro</strong> e <strong style="color:#00FF00">login</strong> com tokens <strong style="color:#00FF00">JWT</strong> e rotas protegidas.
 - **Gerenciamento de Tarefas (CRUD):**
-  - **Criar:** Adicionar tarefas com título, descrição, prioridade (`BAIXA`, `MEDIA`, `ALTA`) e data de vencimento opcional.
-  - **Ler:** Visualizar a lista de tarefas com estados de carregamento (skeletons) e animações de entrada/saída (`Framer Motion`).
-  - **Atualizar:** Editar todos os campos de uma tarefa (título, descrição, status, prioridade, data) através de um modal.
-  - **Deletar:** Excluir tarefas com confirmação (`window.confirm`).
-- **Recursos Avançados da Lista de Tarefas:**
-  - **Busca em Tempo Real:** Filtrar tarefas por título dinamicamente.
-  - **Ordenação Dinâmica:** Ordenar tarefas por data de criação, data de vencimento ou prioridade (ascendente/descendente).
-  - **UI Otimista:** Ações de edição e exclusão refletem instantaneamente na interface para uma experiência mais fluida, com reversão em caso de erro na API.
+  - **Criar:** Adicionar tarefas com título, descrição, <strong style="color:#00FF00">prioridade</strong> (`BAIXA`, `MEDIA`, `ALTA`) e <strong style="color:#00FF00">data de vencimento</strong>.
+  - **Ler:** Visualizar a lista com <strong style="color:#00FF00">loading states</strong> (skeletons) e <strong style="color:#00FF00">animações</strong> de entrada/saída (`Framer Motion`).
+  - **Atualizar:** Editar todos os campos via <strong style="color:#00FF00">modal</strong>.
+  - **Deletar:** Excluir tarefas com confirmação.
+- **Recursos Avançados da Lista:**
+  - <strong style="color:#00FF00">Busca</strong> em Tempo Real por título.
+  - <strong style="color:#00FF00">Ordenação</strong> Dinâmica (criação, vencimento, prioridade).
+  - <strong style="color:#00FF00">UI Otimista:</strong> Edição e exclusão instantâneas com reversão em caso de erro.
 - **Gerenciamento de Usuário:**
-  - **Página de Perfil:** Visualização dos dados do usuário logado (nome, email, data de cadastro).
-  - **Sistema de Cargos (Roles):** Diferenciação entre usuários comuns (`USER`) e administradores (`ADMIN`).
+  - **Página de Perfil:** Visualização dos dados do usuário logado.
+  - Sistema de <strong style="color:#00FF00">Cargos (Roles):</strong> `USER` vs `ADMIN`.
 - **Painel de Administração:**
-  - Rota `/admin` protegida, acessível apenas por usuários `ADMIN`.
-  - Visualização de todos os usuários cadastrados no sistema.
-  - Exclusão de usuários (`USER`), com proteção contra exclusão de `ADMIN`.
-  - Edição de cargos (`USER` <-> `ADMIN`) diretamente pela interface.
+  - Rota `/admin` protegida (<strong style="color:#00FF00">apenas `ADMIN`</strong>).
+  - Visualização de todos os usuários.
+  - Exclusão de usuários (`USER`).
+  - Edição de cargos (`USER` <-> `ADMIN`).
 - **Interface e UX:**
-  - Design responsivo com tema escuro.
-  - Animações suaves (Framer Motion) para feedback visual.
-  - Mensagens de feedback (Toasts) para ações do usuário (`react-toastify`).
-  - Navegação fluida com barra lateral (`react-router-dom`).
+  - Design responsivo com <strong style="color:#00FF00">tema escuro</strong>.
+  - Animações suaves (`Framer Motion`).
+  - Mensagens de feedback (<strong style="color:#00FF00">Toasts</strong>).
+  - Navegação fluida com <strong style="color:#00FF00">barra lateral</strong> (`React Router`).
 - **Qualidade e Testes:**
-  - Cobertura de testes automatizados (`Jest` + `React Testing Library`) para todo o fluxo de autenticação e funcionalidades CRUD da `TasksPage`.
-  - Configuração de CI/CD com GitHub Actions para rodar testes automaticamente em Pull Requests (configurado em ambos repositórios).
+  - Cobertura de <strong style="color:#00FF00">testes automatizados</strong> (`Jest` + `React Testing Library`) para autenticação e CRUD de tarefas.
+  - <strong style="color:#00FF00">Integração Contínua (CI):</strong> Workflows do GitHub Actions para rodar verificações em Pull Requests (frontend e backend).
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## <span style="color:#00FF00">🛠️ Tecnologias Utilizadas</span>
 
-Este projeto foi construído utilizando tecnologias modernas e padrões da indústria para desenvolvimento full-stack.
-
-| Categoria | Tecnologia |
-| --- | --- |
-| **Frontend** | ![React](https://img.shields.io/badge/React-000?style=for-the-badge&logo=react&logoColor=00FF00) ![TypeScript](https://img.shields.io/badge/TypeScript-000?style=for-the-badge&logo=typescript&logoColor=00FF00) ![Vite](https://img.shields.io/badge/Vite-000?style=for-the-badge&logo=vite&logoColor=00FF00) ![React Router](https://img.shields.io/badge/React_Router-000?style=for-the-badge&logo=reactrouter&logoColor=00FF00) ![Axios](https://img.shields.io/badge/Axios-000?style=for-the-badge&logo=axios&logoColor=00FF00) ![Framer Motion](https://img.shields.io/badge/Framer_Motion-000?style=for-the-badge&logo=framer&logoColor=00FF00) ![React Toastify](https://img.shields.io/badge/React_Toastify-000?style=for-the-badge&logo=reacttoastify&logoColor=00FF00) |
-| **Backend** | ![Node.js](https://img.shields.io/badge/Node.js-000?style=for-the-badge&logo=nodedotjs&logoColor=00FF00) ![Express.js](https://img.shields.io/badge/Express.js-000?style=for-the-badge&logo=express&logoColor=00FF00) ![JWT](https://img.shields.io/badge/JWT-000?style=for-the-badge&logo=jsonwebtokens&logoColor=00FF00) ![Bcrypt.js](https://img.shields.io/badge/Bcrypt-000?style=for-the-badge&logo=bcrypt&logoColor=00FF00) |
-| **Banco de Dados** | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-000?style=for-the-badge&logo=postgresql&logoColor=00FF00) ![Prisma](https://img.shields.io/badge/Prisma-000?style=for-the-badge&logo=prisma&logoColor=00FF00) |
-| **Testes** | ![Jest](https://img.shields.io/badge/Jest-000?style=for-the-badge&logo=jest&logoColor=00FF00) ![React Testing Library](https://img.shields.io/badge/Testing_Library-000?style=for-the-badge&logo=testinglibrary&logoColor=00FF00) |
-| **DevOps & Ferramentas** | ![Docker](https://img.shields.io/badge/Docker-000?style=for-the-badge&logo=docker&logoColor=00FF00) ![Git](https://img.shields.io/badge/Git-000?style=for-the-badge&logo=git&logoColor=00FF00) ![GitHub](https://img.shields.io/badge/GitHub-000?style=for-the-badge&logo=github&logoColor=00FF00) ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-000?style=for-the-badge&logo=githubactions&logoColor=00FF00) ![Vercel](https://img.shields.io/badge/Vercel-000?style=for-the-badge&logo=vercel&logoColor=00FF00) ![Render](https://img.shields.io/badge/Render-000?style=for-the-badge&logo=render&logoColor=00FF00) |
+<p align="center">
+  <strong style="color:#00FF00">Frontend:</strong><br>
+  <img src="https://img.shields.io/badge/React-000?style=for-the-badge&logo=react&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/TypeScript-000?style=for-the-badge&logo=typescript&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/Vite-000?style=for-the-badge&logo=vite&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/React_Router-000?style=for-the-badge&logo=reactrouter&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/Axios-000?style=for-the-badge&logo=axios&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/Framer_Motion-000?style=for-the-badge&logo=framer&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/React_Toastify-000?style=for-the-badge&logo=reacttoastify&logoColor=00FF00" />
+</p>
+<p align="center">
+  <strong style="color:#00FF00">Backend:</strong><br>
+  <img src="https://img.shields.io/badge/Node.js-000?style=for-the-badge&logo=nodedotjs&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/Express.js-000?style=for-the-badge&logo=express&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/JWT-000?style=for-the-badge&logo=jsonwebtokens&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/Bcrypt-000?style=for-the-badge&logo=bcrypt&logoColor=00FF00" />
+</p>
+<p align="center">
+  <strong style="color:#00FF00">Banco de Dados:</strong><br>
+  <img src="https://img.shields.io/badge/PostgreSQL-000?style=for-the-badge&logo=postgresql&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/Prisma-000?style=for-the-badge&logo=prisma&logoColor=00FF00" />
+</p>
+<p align="center">
+  <strong style="color:#00FF00">Testes:</strong><br>
+  <img src="https://img.shields.io/badge/Jest-000?style=for-the-badge&logo=jest&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/Testing_Library-000?style=for-the-badge&logo=testinglibrary&logoColor=00FF00" />
+</p>
+<p align="center">
+  <strong style="color:#00FF00">DevOps & Ferramentas:</strong><br>
+  <img src="https://img.shields.io/badge/Docker-000?style=for-the-badge&logo=docker&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/Git-000?style=for-the-badge&logo=git&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/GitHub-000?style=for-the-badge&logo=github&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/GitHub_Actions-000?style=for-the-badge&logo=githubactions&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/Vercel-000?style=for-the-badge&logo=vercel&logoColor=00FF00" />
+  <img src="https://img.shields.io/badge/Render-000?style=for-the-badge&logo=render&logoColor=00FF00" />
+</p>
 
 ---
 
-## 🚀 Rodando o Projeto Localmente
+## <span style="color:#00FF00">🚀 Rodando o Projeto Localmente</span>
 
-Para rodar este projeto na sua máquina, siga os passos abaixo. Você precisará ter o [Node.js](https://nodejs.org/en/) (v18 ou superior) e o [Docker](https://www.docker.com/products/docker-desktop/) instalados.
+Para rodar este projeto na sua máquina, siga os passos abaixo. Você precisará ter o [Node.js](https://nodejs.org/en/) (v18+) e o [Docker](https://www.docker.com/products/docker-desktop/) instalados.
 
-### Backend (API)
+### <span style="color:#00FF00">Backend (API)</span>
 ```bash
 # 1. Clone o repositório do backend
 git clone [https://github.com/DaviDias0/task-manager-api.git](https://github.com/DaviDias0/task-manager-api.git)
@@ -96,15 +127,15 @@ cd task-manager-api
 #    Configure sua DATABASE_URL (ex: postgresql://user:password@db:5432/taskdb)
 #    Configure um JWT_SECRET seguro (ex: uma string longa e aleatória)
 
-# 4. Inicie os containers do Docker (isso inclui o banco de dados)
+# 4. Inicie os containers do Docker (inclui o banco de dados)
 docker-compose up --build -d
 
-# 5. Aplique as migrações do Prisma (necessário na primeira vez)
+# 5. Aplique as migrações do Prisma (necessário na primeira vez e após mudanças no schema)
 docker-compose exec api npx prisma migrate dev
 ```
 O backend estará rodando em `http://localhost:3000`.
 
-### Frontend
+### <span style="color:#00FF00">Frontend</span>
 ```bash
 # 1. Clone o repositório do frontend (em outra pasta)
 git clone [https://github.com/DaviDias0/task-manager-frontend.git](https://github.com/DaviDias0/task-manager-frontend.git)
@@ -126,6 +157,6 @@ A aplicação estará acessível em `http://localhost:5173` (ou a porta indicada
 
 ---
 
-## 📄 Licença
+## <span style="color:#00FF00">📄 Licença</span>
 
-Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes (se existir).
