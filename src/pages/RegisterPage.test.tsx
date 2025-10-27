@@ -36,7 +36,7 @@ describe('RegisterPage', () => {
     expect(screen.getByPlaceholderText(/seu nome/i)).toHaveValue('Davi Dias');
     expect(screen.getByPlaceholderText(/seu e-mail/i)).toHaveValue('davi@teste.com');
     expect(screen.getByPlaceholderText(/crie uma senha/i)).toHaveValue('senhaforte123');
-  });
+  }); // <-- CORRIGIDO AQUI
 
   // Teste 3: Falha no Registro
   it('should display an error toast on registration failure', async () => {
