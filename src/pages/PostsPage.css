@@ -1,0 +1,180 @@
+/* src/pages/PostsPage.css */
+
+.posts-page h1 {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Formulário de Adicionar Post */
+.add-post-form {
+  background-color: var(--surface-1);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.add-post-form h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.form-group-post {
+  margin-bottom: 1rem;
+}
+
+.form-group-post label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.form-group-post input[type="text"],
+.form-group-post textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--surface-2);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  box-sizing: border-box; /* Importante */
+}
+
+.form-group-post textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.add-post-form button[type="submit"] {
+  background-color: var(--accent-blue);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.add-post-form button[type="submit"]:hover {
+  background-color: var(--accent-blue-hover);
+}
+.add-post-form button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Lista de Posts */
+.posts-list h2 {
+  margin-bottom: 1.5rem;
+}
+
+.post-card {
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.post-meta {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.post-content {
+  color: var(--text-primary);
+  line-height: 1.6;
+  /* Limitar altura e mostrar reticências (opcional) */
+  /* max-height: 100px; */
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
+  /* white-space: pre-wrap; /* Mantém quebras de linha */
+}
+
+.post-actions {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.post-actions button {
+  background-color: var(--surface-2);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.post-actions button:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+.post-actions button.delete-button:hover {
+  background-color: var(--error);
+  border-color: var(--error);
+  color: white;
+}
+
+.error-message {
+  color: var(--error);
+}/* src/pages/PostsPage.css -> Adicionar no final */
+
+/* --- Estilos para Edição de Post --- */
+.edit-post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.edit-post-form input,
+.edit-post-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--surface-2);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.edit-post-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Estilo para o botão Salvar */
+.post-actions button.save-button {
+  background-color: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: white;
+}
+
+.post-actions button.save-button:hover {
+  background-color: var(--accent-blue-hover);
+  border-color: var(--accent-blue-hover);
+  color: white;
+}
+
+.post-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
