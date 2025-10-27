@@ -690,4 +690,163 @@ body {
 /* Remove margens extras do formulário interno */
 .add-task-form-content-wrapper .add-task-content {
   margin-top: 0;
+}/* DENTRO da seção "Estilos da Página de Perfil" no seu index.css */
+
+.profile-page h1 {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
 }
+
+/* --- Estilos do Upload de Foto (NECESSÁRIO!) --- */
+.profile-picture-section {
+  display: flex; /* Organiza os itens */
+  flex-direction: column; /* Coloca imagem acima do formulário */
+  align-items: center; /* Centraliza horizontalmente */
+  gap: 1rem; /* Espaço entre imagem e formulário */
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: var(--surface-1); /* Fundo igual ao profile-card */
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+}
+
+.profile-avatar {
+  width: 100px; /* Tamanho da imagem */
+  height: 100px;
+  border-radius: 50%; /* Faz a imagem ficar redonda */
+  object-fit: cover; /* Evita distorção da imagem */
+  border: 4px solid var(--surface-2); /* Borda em volta */
+  background-color: var(--surface-2); /* Cor de fundo enquanto carrega */
+  margin-bottom: 0.5rem;
+}
+
+.profile-upload-form {
+  display: flex;
+  flex-wrap: wrap; /* Permite que botões quebrem linha se necessário */
+  justify-content: center; /* Centraliza os botões */
+  gap: 0.75rem; /* Espaço entre os botões */
+}
+
+/* Estilo geral dos botões de upload */
+.profile-upload-form button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Botão "Escolher Foto" */
+.profile-upload-form button[type="button"] {
+  background-color: var(--surface-2);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+.profile-upload-form button[type="button"]:hover {
+  background-color: var(--border-color);
+}
+
+/* Botão "Salvar Foto" */
+.profile-upload-form button[type="submit"] {
+  background-color: var(--accent-blue);
+  color: white;
+}
+.profile-upload-form button[type="submit"]:hover {
+  background-color: var(--accent-blue-hover);
+}
+
+/* Estilo para botões desabilitados */
+.profile-upload-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+/* --- Fim da Seção Adicionada/Corrigida --- */
+
+
+/* Estilos do card de informações (devem existir) */
+.profile-card {
+  background-color: var(--surface-1);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  /* Adicione margem se necessário */
+  /* margin-top: 2rem; */
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-info + .profile-info {
+  margin-top: 1.5rem;
+}
+
+.profile-info strong {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+.profile-info span {
+  color: var(--text-primary);
+  font-size: 1.125rem;
+}
+
+/* Garanta que as regras role-badge também estejam aqui ou globais */
+.role-badge {
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block; /* Para o span se comportar como bloco */
+  /* max-width: fit-content; Opcional */
+}
+.role-user {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--accent-blue);
+}
+.role-admin {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+}/* Dentro da seção "Layout Principal com Sidebar" no seu index.css */
+
+/* --- Estilos do Perfil na Sidebar (ATUALIZADO) --- */
+.sidebar-profile {
+  display: flex; /* Mantém flexbox */
+  flex-direction: column; /* Coloca os itens um abaixo do outro */
+  align-items: center; /* Centraliza os itens horizontalmente */
+  padding: 15px 0; /* Padding vertical */
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1rem;
+  text-align: center; /* Garante que o texto (nome) seja centralizado */
+}
+
+.sidebar-avatar {
+  width: 80px; /* Aumenta o tamanho da imagem (ajuste conforme gostar) */
+  height: 80px;
+  border-radius: 50%; /* Mantém redondo */
+  object-fit: cover;
+  background-color: var(--surface-2);
+  border: 3px solid var(--surface-2); /* Borda um pouco maior */
+  margin-bottom: 0.75rem; /* Espaço entre a imagem e o nome */
+  /* Remove margem lateral, pois o align-items centraliza */
+}
+
+.sidebar-username {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  /* Remove margem lateral */
+  /* Remove max-width ou ajuste se necessário para nomes longos */
+  max-width: 100%; /* Permite que o texto use a largura disponível */
+  overflow: hidden; /* Mantém para nomes muito longos */
+  text-overflow: ellipsis; /* Mantém para nomes muito longos */
+  white-space: nowrap; /* Mantém em uma linha */
+}
+/* --- Fim da Seção Atualizada --- */

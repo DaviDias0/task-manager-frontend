@@ -1,5 +1,4 @@
-// src/App.tsx
-
+// src/App.tsx (Versão Limpa)
 import { Routes, Route } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
@@ -9,16 +8,15 @@ import { AdminPage } from './pages/AdminPage';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AdminRoute } from './components/AdminRoute';
-import { MainLayout } from './components/MainLayout'; // Layout principal que inclui a Sidebar
-// A importação do ToastContainer e seu CSS foram REMOVIDAS daqui
-
-// Importação global do Skeleton CSS (mantida aqui ou movida para main.tsx)
+import { MainLayout } from './components/MainLayout';
+// Removida a importação do 'toast' que era só para o botão
 import 'react-loading-skeleton/dist/skeleton.css';
+import { PostsPage } from './pages/PostsPage'; // <-- Importa a nova página
 
 function App() {
   return (
     <AuthProvider>
-      {/* O ToastContainer NÃO está mais aqui */}
+      {/* ... botão de teste (pode remover) ... */}
       <Routes>
         {/* Rotas públicas */}
         <Route path="/login" element={<LoginPage />} />
@@ -26,12 +24,12 @@ function App() {
 
         {/* Rotas protegidas */}
         <Route element={<ProtectedRoute />}>
-          <Route element={<MainLayout />}> {/* Layout aplicado a todas as rotas internas */}
-            {/* Rotas para usuários comuns e admins */}
+          <Route element={<MainLayout />}>
             <Route path="/" element={<TasksPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/posts" element={<PostsPage />} /> {/* <-- ADICIONE A ROTA AQUI */}
 
-            {/* Rotas exclusivas para admins */}
+            {/* Rotas de Admin */}
             <Route element={<AdminRoute />}>
               <Route path="/admin" element={<AdminPage />} />
             </Route>
@@ -41,5 +39,4 @@ function App() {
     </AuthProvider>
   );
 }
-
 export default App;
